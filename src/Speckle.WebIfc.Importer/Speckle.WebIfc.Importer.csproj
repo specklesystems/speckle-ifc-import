@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Speckle.Objects" />
     <PackageReference Include="Speckle.Sdk" />
-    <PackageReference Include="speckle.webifc" />
+    <PackageReference Include="Speckle.WebIfc" />
   </ItemGroup>
 
 </Project>
