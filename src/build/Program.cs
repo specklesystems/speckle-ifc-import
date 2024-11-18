@@ -37,7 +37,6 @@ Target(
 
 Target(
   RESTORE,
-  DependsOn(FORMAT),
   () => RunAsync("dotnet", $"restore {SOLUTION} --locked-mode", BASE_PATH)
 );
 
@@ -51,10 +50,20 @@ Target(
   }
 );
 
+Target(
+  "publish",
+  DependsOn(BUILD),
+  async () =>
+  {
+    await RunAsync("dotnet", $"publish {SOLUTION} -c Release --no-restore --no-build -o publish/", BASE_PATH)
+      .ConfigureAwait(false);
+  }
+);
+
 static Task RunPack() =>
   RunAsync("dotnet", $"pack {SOLUTION} -c Release -o output --no-build", BASE_PATH);
 
 Target(PACK, DependsOn(BUILD), RunPack);
 
-Target("default", DependsOn(FORMAT, BUILD), () => Console.WriteLine("Done!"));
+Target("default", DependsOn(BUILD), () => Console.WriteLine("Done!"));
 await RunTargetsAndExitAsync(args).ConfigureAwait(true);
