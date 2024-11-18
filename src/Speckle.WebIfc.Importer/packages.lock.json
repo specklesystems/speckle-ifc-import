@@ -56,7 +56,7 @@
         "type": "Direct",
         "requested": "[0.0.64-speckle1, )",
         "resolved": "0.0.64-speckle1",
-        "contentHash": "oJgPu/LCypQLelDrtV6+dk0Qm+3VSEYWXCjeXHs2/ekOZEKwpFKhcKVOd1uMjtVLh+n3CZ/6tMgO1nZq9FpwMw=="
+        "contentHash": "dJQ4mPgiNAVjdyZNvejmnv0UTqNHw/7BCEbYUumKklLyzXtVAARGXRsDDbNNwJv3Y/L/6kVgwUehU9BbpAKURA=="
       },
       "GraphQL.Client": {
         "type": "Transitive",
