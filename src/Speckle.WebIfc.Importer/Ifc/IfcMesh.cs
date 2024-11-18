@@ -2,7 +2,6 @@ namespace Speckle.WebIfc.Importer.Ifc;
 
 public class IfcMesh(IntPtr mesh)
 {
-
   public int VertexCount => WebIfc.GetNumVertices(mesh);
 
   public unsafe IfcVertex* GetVertices() => (IfcVertex*)WebIfc.GetVertices(mesh);

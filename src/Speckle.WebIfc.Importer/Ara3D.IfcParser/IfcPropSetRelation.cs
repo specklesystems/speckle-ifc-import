@@ -6,9 +6,7 @@ namespace Ara3D.IfcParser;
 public class IfcPropSetRelation : IfcRelation
 {
   public IfcPropSetRelation(IfcGraph graph, StepInstance lineData, StepId from, StepList to)
-    : base(graph, lineData, from, to)
-  {
-  }
+    : base(graph, lineData, from, to) { }
 
   public IfcPropSet PropSet
   {

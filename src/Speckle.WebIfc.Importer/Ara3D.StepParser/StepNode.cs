@@ -35,8 +35,7 @@ public class StepNode
       AddNodes(a);
   }
 
-  public override string ToString()
-    => Entity.ToString();
+  public override string ToString() => Entity.ToString();
 
   public string ToGraph(HashSet<StepNode>? prev = null)
   {
@@ -47,9 +46,7 @@ public class StepNode
     return $"{EntityType}({nodeStr})";
   }
 
-  public string EntityType
-    => Entity.EntityType;
+  public string EntityType => Entity.EntityType;
 
-  public string QuickHash()
-    => $"{EntityType}:{Nodes.Count}";
+  public string QuickHash() => $"{EntityType}:{Nodes.Count}";
 }

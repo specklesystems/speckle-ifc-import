@@ -6,7 +6,7 @@ namespace Ara3D.StepParser;
 
 /// <summary>
 /// Contains information about where an instance is within a file.
-/// </summary>  
+/// </summary>
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 [method: MethodImpl(MethodImplOptions.AggressiveInlining)]
 public readonly struct StepRawInstance(uint id, ByteSpan type, int lineIndex, int index)
@@ -17,9 +17,7 @@ public readonly struct StepRawInstance(uint id, ByteSpan type, int lineIndex, in
   public readonly int Index = index;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public bool IsValid()
-    => Id > 0;
+  public bool IsValid() => Id > 0;
 
-  public override string ToString()
-    => $"{Id} = {Type}";
+  public override string ToString() => $"{Id} = {Type}";
 }

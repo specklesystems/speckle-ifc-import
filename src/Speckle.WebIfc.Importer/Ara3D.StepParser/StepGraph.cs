@@ -8,11 +8,9 @@ public class StepGraph
 
   public readonly Dictionary<uint, StepNode> Lookup = new();
 
-  public StepNode GetNode(uint id)
-    => Lookup[id];
+  public StepNode GetNode(uint id) => Lookup[id];
 
-  public IEnumerable<StepNode> Nodes
-    => Lookup.Values;
+  public IEnumerable<StepNode> Nodes => Lookup.Values;
 
   public StepGraph(StepDocument doc)
   {
@@ -28,11 +26,10 @@ public class StepGraph
       n.Init();
   }
 
-  public static StepGraph Create(StepDocument doc)
-    => new(doc);
+  public static StepGraph Create(StepDocument doc) => new(doc);
 
-  public string? ToValString(StepNode node, int depth)
-    => ToValString(node.Entity.Entity, depth - 1);
+  public string? ToValString(StepNode node, int depth) =>
+    ToValString(node.Entity.Entity, depth - 1);
 
   public string? ToValString(StepValue? value, int depth)
   {
@@ -48,9 +45,7 @@ public class StepGraph
         return $"{stepEntity.EntityType}{ToValString(stepEntity.Attributes, depth)}";
 
       case StepId stepId:
-        return depth <= 0
-          ? "#"
-          : ToValString(GetNode(stepId.Id), depth - 1);
+        return depth <= 0 ? "#" : ToValString(GetNode(stepId.Id), depth - 1);
 
       case StepNumber stepNumber:
       case StepRedeclared stepRedeclared:

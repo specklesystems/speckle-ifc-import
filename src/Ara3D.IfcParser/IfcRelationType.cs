@@ -2,11 +2,9 @@
 
 namespace Ara3D.IfcParser
 {
-    public class IfcRelationType : IfcRelation
-    {
-        public IfcRelationType(IfcGraph graph, StepInstance lineData, StepId from, StepList to)
-            : base(graph, lineData, from, to)
-        {
-        }
-    }
+  public class IfcRelationType : IfcRelation
+  {
+    public IfcRelationType(IfcGraph graph, StepInstance lineData, StepId from, StepList to)
+      : base(graph, lineData, from, to) { }
+  }
 }

@@ -5,11 +5,9 @@ public class StepInstance
   public readonly StepEntity Entity;
   public readonly uint Id;
 
-  public List<StepValue> AttributeValues
-    => Entity.Attributes.Values;
+  public List<StepValue> AttributeValues => Entity.Attributes.Values;
 
-  public string EntityType
-    => Entity.EntityType.ToString() ?? "";
+  public string EntityType => Entity.EntityType.ToString() ?? "";
 
   public StepInstance(uint id, StepEntity entity)
   {
@@ -17,17 +15,15 @@ public class StepInstance
     Entity = entity;
   }
 
-  public bool IsEntityType(string str)
-    => EntityType == str;
+  public bool IsEntityType(string str) => EntityType == str;
 
-  public override string ToString()
-    => $"#{Id}={Entity};";
+  public override string ToString() => $"#{Id}={Entity};";
 
-  public int Count 
-    => AttributeValues.Count;
+  public int Count => AttributeValues.Count;
 
   public StepValue this[int i]
 #pragma warning disable CA1065
-    => i < Count ? AttributeValues[i] : throw new IndexOutOfRangeException();
+    =>
+    i < Count ? AttributeValues[i] : throw new IndexOutOfRangeException();
 #pragma warning restore CA1065
 }

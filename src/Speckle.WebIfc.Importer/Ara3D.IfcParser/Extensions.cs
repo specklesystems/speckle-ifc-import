@@ -1,49 +1,45 @@
-﻿using Ara3D.Buffers;
+﻿using System.Text;
+using Ara3D.Buffers;
 using Ara3D.StepParser;
-using System.Text;
 
 namespace Ara3D.IfcParser;
 
 public static class Extensions
 {
-  public static void Add<TKey, TValue>(this IDictionary<TKey, List<TValue>> self, TKey key, TValue value)
+  public static void Add<TKey, TValue>(
+    this IDictionary<TKey, List<TValue>> self,
+    TKey key,
+    TValue value
+  )
   {
     if (!self.ContainsKey(key))
       self[key] = new List<TValue>();
     self[key].Add(value);
   }
 
-  public static uint AsId(this StepValue value)
-    => value is StepUnassigned
-      ? 0u
-      : ((StepId)value).Id;
+  public static uint AsId(this StepValue value) =>
+    value is StepUnassigned ? 0u : ((StepId)value).Id;
 
-  public static string AsString(this StepValue value)
-    => value is StepString ss ? ss.AsString() :
-      value is StepNumber sn ? sn.Value.ToString() :
-      value is StepId si ? si.Id.ToString() :
-      value is StepSymbol ssm ? ssm.Name.ToString() :
-      "";
+  public static string AsString(this StepValue value) =>
+    value is StepString ss ? ss.AsString()
+    : value is StepNumber sn ? sn.Value.ToString()
+    : value is StepId si ? si.Id.ToString()
+    : value is StepSymbol ssm ? ssm.Name.ToString()
+    : "";
 
-  public static double AsNumber(this StepValue value)
-    => value is StepUnassigned
-      ? 0
-      : ((StepNumber)value).Value;
+  public static double AsNumber(this StepValue value) =>
+    value is StepUnassigned ? 0 : ((StepNumber)value).Value;
 
-  public static List<StepValue> AsList(this StepValue value)
-    => value is StepUnassigned
-      ? new List<StepValue>()
-      : ((StepList)value).Values;
+  public static List<StepValue> AsList(this StepValue value) =>
+    value is StepUnassigned ? new List<StepValue>() : ((StepList)value).Values;
 
-  public static List<uint> AsIdList(this StepValue value)
-    => value is StepUnassigned
-      ? new List<uint>()
-      : value.AsList().Select(AsId).ToList();
+  public static List<uint> AsIdList(this StepValue value) =>
+    value is StepUnassigned ? new List<uint>() : value.AsList().Select(AsId).ToList();
 
   // Uses Latin1 encoding (aka ISO-8859-1)
-  // Extended characters converted using an IFC specific system 
-  public static string AsString(this ByteSpan span)
-    => Encoding.Latin1.GetString(span.ToSpan()).IfcToUnicode();
+  // Extended characters converted using an IFC specific system
+  public static string AsString(this ByteSpan span) =>
+    Encoding.Latin1.GetString(span.ToSpan()).IfcToUnicode();
 
   // https://technical.buildingsmart.org/resources/ifcimplementationguidance/string-encoding/
   public static string IfcToUnicode(this string input)
@@ -87,7 +83,7 @@ public static class Extensions
         }
         continue;
       }
-                
+
       if (escapeChar == 'X')
       {
         if (i < length && input[i] == '\\')
@@ -153,8 +149,7 @@ public static class Extensions
     return output.ToString();
   }
 
-  public static string AsString(this StepString ss)
-    => ss.Value.AsString();
+  public static string AsString(this StepString ss) => ss.Value.AsString();
 
   public static object? ToJsonObject(this StepValue sv)
   {
@@ -168,7 +163,7 @@ public static class Extensions
 
         if (attr.Values.Count == 1)
           return attr.Values[0].ToJsonObject();
-                    
+
         return attr.Values.Select(ToJsonObject).ToList();
       }
 
@@ -183,10 +178,10 @@ public static class Extensions
 
       case StepRedeclared stepRedeclared:
         return null;
-                
+
       case StepString stepString:
         return stepString.AsString();
-                
+
       case StepSymbol stepSymbol:
         var tmp = stepSymbol.Name.AsString();
         if (tmp == "T")
@@ -194,7 +189,7 @@ public static class Extensions
         if (tmp == "F")
           return false;
         return tmp;
-                
+
       case StepUnassigned stepUnassigned:
         return null;
 

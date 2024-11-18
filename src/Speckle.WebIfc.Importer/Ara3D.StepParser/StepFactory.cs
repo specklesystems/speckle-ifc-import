@@ -68,16 +68,16 @@ public static unsafe class StepFactory
     {
       switch (token.Type)
       {
-        // Advance past comments, whitespace, and commas 
+        // Advance past comments, whitespace, and commas
         case StepTokenType.Comment:
         case StepTokenType.Whitespace:
         case StepTokenType.Separator:
         case StepTokenType.None:
           continue;
 
-        // Expected end of group 
+        // Expected end of group
         case StepTokenType.EndGroup:
-          return new StepList(values);    
+          return new StepList(values);
       }
 
       var curValue = Create(ref token, end);

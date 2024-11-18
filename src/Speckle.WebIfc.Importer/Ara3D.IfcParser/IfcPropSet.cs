@@ -4,7 +4,7 @@ using Ara3D.StepParser;
 namespace Ara3D.IfcParser;
 
 // This merges two separate entity types: IfcPropertySet and IfcElementQuantity.
-// Both of which are derived from IfcPropertySetDefinition. 
+// Both of which are derived from IfcPropertySetDefinition.
 // This is something that can be referred to by a PropertySetRelation
 // An IfcElementQuantity has an additional "method of measurement" property.
 // https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm
@@ -37,5 +37,6 @@ public class IfcPropSet : IfcNode
   public bool IsQuantity => LineData.AttributeValues.Count == 6;
   public string? MethodOfMeasurement => IsQuantity ? this[4]?.AsString() : null;
   public int NumProperties => PropertyIdList.Values.Count;
+
   public uint PropertyId(int i) => PropertyIdList.Values[i].AsId();
 }

@@ -2,17 +2,17 @@
 
 namespace Ara3D.IfcParser;
 
-  public class IfcProp : IfcNode
+public class IfcProp : IfcNode
+{
+  public readonly StepValue? Value;
+
+  public new string? Name => this[0]?.AsString();
+  public new string? Description => this[1]?.AsString();
+
+  public IfcProp(IfcGraph graph, StepInstance lineData, StepValue? value)
+    : base(graph, lineData)
   {
-      public readonly StepValue? Value;
-
-      public new string? Name => this[0]?.AsString();
-      public new string? Description => this[1]?.AsString();
-
-      public IfcProp(IfcGraph graph, StepInstance lineData, StepValue? value)
-          : base(graph, lineData)
-      {
-          if (lineData.Count < 2)
+    if (lineData.Count < 2)
     {
       throw new System.Exception("Expected at least two values in the line data");
     }
@@ -23,5 +23,5 @@ namespace Ara3D.IfcParser;
     }
 
     Value = value;
-      }
   }
+}

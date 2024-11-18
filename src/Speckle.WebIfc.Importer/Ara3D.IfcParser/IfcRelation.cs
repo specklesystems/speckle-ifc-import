@@ -19,9 +19,7 @@ public class IfcRelation : IfcEntity
     To = to;
   }
 
-  public IEnumerable<uint> GetRelatedIds()
-    => To.Values.Select(v => v.AsId());
+  public IEnumerable<uint> GetRelatedIds() => To.Values.Select(v => v.AsId());
 
-  public IEnumerable<IfcNode> GetRelatedNodes()
-    => Graph.GetNodes(GetRelatedIds());
+  public IEnumerable<IfcNode> GetRelatedNodes() => Graph.GetNodes(GetRelatedIds());
 }

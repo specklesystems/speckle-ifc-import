@@ -6,14 +6,11 @@ namespace Ara3D.StepParser;
 
 public static class StepTokenizer
 {
-  public static readonly StepTokenType[] TokenLookup =
-    CreateTokenLookup();
+  public static readonly StepTokenType[] TokenLookup = CreateTokenLookup();
 
-  public static readonly bool[] IsNumberLookup =
-    CreateNumberLookup();
+  public static readonly bool[] IsNumberLookup = CreateNumberLookup();
 
-  public static readonly bool[] IsIdentLookup =
-    CreateIdentLookup();
+  public static readonly bool[] IsIdentLookup = CreateIdentLookup();
 
   public static StepTokenType[] CreateTokenLookup()
   {
@@ -40,8 +37,7 @@ public static class StepTokenizer
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static StepTokenType LookupToken(byte b)
-    => TokenLookup[b];
+  public static StepTokenType LookupToken(byte b) => TokenLookup[b];
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool IsNumberChar(byte b)
@@ -189,24 +185,19 @@ public static class StepTokenizer
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static bool IsWhiteSpace(byte b)
-    => b == ' ' || b == '\t';
+  public static bool IsWhiteSpace(byte b) => b == ' ' || b == '\t';
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static bool IsLineBreak(byte b)
-    => b == '\n' || b == '\r';
+  public static bool IsLineBreak(byte b) => b == '\n' || b == '\r';
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static bool IsIdent(byte b)
-    => b >= 'A' && b <= 'Z' || b >= 'a' && b <= 'z' || b == '_';
+  public static bool IsIdent(byte b) => b >= 'A' && b <= 'Z' || b >= 'a' && b <= 'z' || b == '_';
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static bool IsDigit(byte b)
-    => b >= '0' && b <= '9';
+  public static bool IsDigit(byte b) => b >= '0' && b <= '9';
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static bool IsIdentOrDigitChar(byte b)
-    => IsIdent(b) || IsDigit(b);
+  public static bool IsIdentOrDigitChar(byte b) => IsIdent(b) || IsDigit(b);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static unsafe byte* AdvancePast(byte* begin, byte* end, string s)
@@ -233,7 +224,8 @@ public static class StepTokenizer
   public static unsafe bool ParseNextToken(ref StepToken prev, byte* end)
   {
     var cur = prev.Span.End();
-    if (cur >= end) return false;
+    if (cur >= end)
+      return false;
     prev = ParseToken(cur, end);
     return true;
   }
@@ -275,9 +267,7 @@ public static class StepTokenizer
         break;
 
       case StepTokenType.Symbol:
-        while (*cur++ != '.')
-        {
-        }
+        while (*cur++ != '.') { }
 
         break;
 

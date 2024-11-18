@@ -21,18 +21,18 @@ public class NodeConverter(IGeometryConverter geometryConverter) : INodeConverte
     // https://github.com/specklesystems/speckle-server/issues/1180
     b["ifc_type"] = node.Type;
 
-    // This is required because "speckle_type" has no setter, but is backed by a private field.  
+    // This is required because "speckle_type" has no setter, but is backed by a private field.
     var baseType = typeof(Base);
     var typeField = baseType.GetField("_type", BindingFlags.Instance | BindingFlags.NonPublic);
     typeField?.SetValue(b, node.Type);
 
-    // Guid is null for property values, and other Ifc entities not derived from IfcRoot 
+    // Guid is null for property values, and other Ifc entities not derived from IfcRoot
     b.applicationId = node.Guid;
 
     // This is the express ID used to identify an entity wihtin a file.
     b["expressID"] = node.Id;
-            
-    // Even if there is no geometry, this will return an empty collection. 
+
+    // Even if there is no geometry, this will return an empty collection.
     var geo = model.GetGeometry(node.Id);
     if (geo != null)
     {
@@ -41,7 +41,7 @@ public class NodeConverter(IGeometryConverter geometryConverter) : INodeConverte
         b["displayValue"] = c.elements;
     }
 
-    // Create the children 
+    // Create the children
     var children = node.GetChildren().Select(x => Convert(model, x)).ToList();
     b["elements"] = children;
 
@@ -62,7 +62,7 @@ public class NodeConverter(IGeometryConverter geometryConverter) : INodeConverte
 
     return b;
   }
-  
+
   public static Dictionary<string, object> ToSpeckleDictionary(IfcPropSet ps)
   {
     var d = new Dictionary<string, object>();
