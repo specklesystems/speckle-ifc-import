@@ -10,7 +10,7 @@ const string BUILD = "build";
 const string PACK = "pack";
 const string CLEAN_LOCKS = "clean-locks";
 
-const string SOLUTION = "Speckle.WebIfc.Importer.sln";
+const string SOLUTION = "src/Speckle.WebIfc.Importer.sln";
 const string BASE_PATH = ".";
 
 Target(
