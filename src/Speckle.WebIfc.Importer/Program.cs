@@ -1,29 +1,30 @@
-using System.Reflection;
-using Ara3D.IfcParser;
-using Ara3D.Utils;
-using Microsoft.Extensions.DependencyInjection;
-using Speckle.Objects.Geometry;
-using Speckle.Sdk.Host;
-using Speckle.Sdk.Models;
+using System.CommandLine;
 using Speckle.WebIfc.Importer;
-using Speckle.WebIfc.Importer.Converters;
-using Speckle.WebIfc.Importer.Ifc;
 
-TypeLoader.Initialize(typeof(Base).Assembly, typeof(Point).Assembly);
-var serviceCollection = new ServiceCollection();
-serviceCollection.AddSpeckleWebIfc();
-serviceCollection.AddMatchingInterfacesAsTransient(Assembly.GetExecutingAssembly());
+var filePathArgument = new Argument<string>
+  (name: "filePath");
+var userIdArgument = new Argument<string>
+  ("userId");
+var streamIdArgument = new Argument<string>
+  ("streamId");
+var branchNameArgument = new Argument<string>
+  ("branchName");
+var commitMessageArgument = new Argument<string>
+  ("commitMessage");
+var tokenArgument = new Argument<string>
+  ("token");
 
-var serviceProvider = serviceCollection.BuildServiceProvider();
-
-var factory = serviceProvider.GetRequiredService<IIfcFactory>();
-Console.WriteLine(factory.Version);
-
-var file = "/home/adam/git/speckle-ifc-import/files/example.ifc";
-var model = factory.Open(file);
-
-var graph = IfcGraph.Load(new FilePath(file));
-
-var converter = serviceProvider.GetRequiredService<IGraphConverter>();
-var b = converter.Convert(model, graph);
-Console.WriteLine(b.GetTotalChildrenCount());
+var rootCommand = new RootCommand
+{
+  filePathArgument,
+  userIdArgument,
+  streamIdArgument,
+  branchNameArgument,
+  commitMessageArgument,
+  tokenArgument
+};
+rootCommand.SetHandler(async (filePath, userId, streamId, branchName, commitMessage, token) =>
+{
+  await Import.Ifc(filePath, userId, streamId, branchName, commitMessage, token);
+}, filePathArgument, userIdArgument, streamIdArgument, branchNameArgument, commitMessageArgument, tokenArgument);
+await rootCommand.InvokeAsync(args);
