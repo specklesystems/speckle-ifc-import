@@ -19,13 +19,21 @@ using Speckle.WebIfc.Importer.Converters;
 using Speckle.WebIfc.Importer.Ifc;
 
 namespace Speckle.WebIfc.Importer;
+
 public static class Import
 {
-  public static async Task Ifc(string url, string filePath, string streamId,
-    string modelId, string commitMessage, string token, IProgress<ProgressArgs>? progress = null)
+  public static async Task Ifc(
+    string url,
+    string filePath,
+    string streamId,
+    string modelId,
+    string commitMessage,
+    string token,
+    IProgress<ProgressArgs>? progress = null
+  )
   {
     var serviceProvider = GetServiceProvider();
-    await Ifc(serviceProvider, url, filePath,  streamId, modelId, commitMessage, token, progress);
+    await Ifc(serviceProvider, url, filePath, streamId, modelId, commitMessage, token, progress);
   }
 
   public static ServiceProvider GetServiceProvider()
@@ -38,9 +46,16 @@ public static class Import
     return serviceCollection.BuildServiceProvider();
   }
 
-  public static async Task Ifc(IServiceProvider serviceProvider, string url, string filePath, string streamId,
-    string modelId, string commitMessage, string token, IProgress<ProgressArgs>? progress = null)
-
+  public static async Task Ifc(
+    IServiceProvider serviceProvider,
+    string url,
+    string filePath,
+    string streamId,
+    string modelId,
+    string commitMessage,
+    string token,
+    IProgress<ProgressArgs>? progress = null
+  )
   {
     var ifcFactory = serviceProvider.GetRequiredService<IIfcFactory>();
     var clientFactory = serviceProvider.GetRequiredService<IClientFactory>();
@@ -63,25 +78,29 @@ public static class Import
     Console.WriteLine($"Converted to Speckle Bases: {ms2 - ms} ms");
 
     var serializeProcessFactory = serviceProvider.GetRequiredService<ISerializeProcessFactory>();
-    var process = serializeProcessFactory.CreateSerializeProcess(baseUri, streamId, token, progress);
-    var (rootId, _) = await process.Serialize(b, default, new SerializeProcessOptions(true, true, false))
+    var process = serializeProcessFactory.CreateSerializeProcess(
+      baseUri,
+      streamId,
+      token,
+      progress
+    );
+    var (rootId, _) = await process
+      .Serialize(b, default, new SerializeProcessOptions(true, true, false))
       .ConfigureAwait(false);
-    Account account = new() { token = token, serverInfo = new ServerInfo { url = baseUri.ToString(), } };
+    Account account = new()
+    {
+      token = token,
+      serverInfo = new ServerInfo { url = baseUri.ToString() },
+    };
     ms = ms2;
     ms2 = stopwatch.ElapsedMilliseconds;
     Console.WriteLine($"Uploaded to Speckle: {ms2 - ms} ms");
 
     // 8 - Create the version (commit)
     using var apiClient = clientFactory.Create(account);
-    _ = await apiClient
-      .Version.Create(
-        new CreateVersionInput(
-          rootId,
-          modelId,
-          streamId,
-          message: commitMessage
-        )
-      );
+    _ = await apiClient.Version.Create(
+      new CreateVersionInput(rootId, modelId, streamId, message: commitMessage)
+    );
     ms = ms2;
     ms2 = stopwatch.ElapsedMilliseconds;
     Console.WriteLine($"Committed to Speckle: {ms2 - ms} ms");

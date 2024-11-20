@@ -35,10 +35,7 @@ Target(
   () => RunAsync("dotnet", "csharpier --check .", BASE_PATH)
 );
 
-Target(
-  RESTORE,
-  () => RunAsync("dotnet", $"restore {SOLUTION} --locked-mode", BASE_PATH)
-);
+Target(RESTORE, () => RunAsync("dotnet", $"restore {SOLUTION} --locked-mode", BASE_PATH));
 
 Target(
   BUILD,
@@ -55,13 +52,17 @@ Target(
   DependsOn(BUILD),
   async () =>
   {
-    await RunAsync("dotnet", $"publish {SOLUTION} -c Release --no-restore --no-build -o publish/", BASE_PATH)
+    await RunAsync(
+        "dotnet",
+        $"publish {SOLUTION} -c Release --no-restore --no-build -o publish/",
+        BASE_PATH
+      )
       .ConfigureAwait(false);
   }
 );
 
 static Task RunPack() =>
-  RunAsync("dotnet", $"pack {SOLUTION} -c Release -o output --no-build", BASE_PATH);
+  RunAsync("dotnet", $"pack {SOLUTION} -c Release -o output/ --no-restore --no-build", BASE_PATH);
 
 Target(PACK, DependsOn(BUILD), RunPack);
 
