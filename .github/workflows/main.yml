@@ -2,7 +2,7 @@ name: .NET Build and Publish
 
 on:
   push:
-    branches: ["speckle"] 
+    branches: ["main"] 
 
 jobs:
   build:
