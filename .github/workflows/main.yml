@@ -24,7 +24,7 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
               
       - name: 🔫 Build and Pack
-        run: ./build.sh pack
+        run: dotnet run --project src/build/build.csproj -- pack
 
       - name: Push to nuget.org
         run: dotnet nuget push output/*.nupkg --source "https://api.nuget.org/v3/index.json" --api-key ${{secrets.CONNECTORS_NUGET_TOKEN }} --skip-duplicate
