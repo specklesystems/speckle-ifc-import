@@ -2,7 +2,6 @@ namespace Speckle.WebIfc.Importer.Ifc;
 
 public class IfcGeometry(IntPtr geometry)
 {
-
   public IfcMesh GetMesh(int i) => new(WebIfc.GetMesh(geometry, i));
 
   public int MeshCount => WebIfc.GetNumMeshes(geometry);

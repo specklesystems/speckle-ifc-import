@@ -5,7 +5,6 @@ namespace Speckle.WebIfc.Importer.Ifc;
 [GenerateAutoInterface]
 public class IfcFactory : IIfcFactory
 {
-
   //probably never disposing this
   private static readonly IntPtr _ptr = WebIfc.InitializeApi();
 

@@ -2,7 +2,6 @@ namespace Speckle.WebIfc.Importer.Ifc;
 
 public class IfcModel(IntPtr model)
 {
-
   public int GetNumGeometries() => WebIfc.GetNumGeometries(model);
 
   public IfcGeometry? GetGeometry(uint id)

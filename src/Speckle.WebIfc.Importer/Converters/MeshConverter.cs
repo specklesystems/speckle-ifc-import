@@ -49,7 +49,7 @@ public class MeshConverter : IMeshConverter
       colors = colors,
       vertices = vertices,
       faces = faces,
-      units = "m"
+      units = "m",
     };
   }
 }
