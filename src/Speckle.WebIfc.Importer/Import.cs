@@ -8,7 +8,6 @@ using Speckle.Sdk;
 using Speckle.Sdk.Api;
 using Speckle.Sdk.Api.GraphQL.Inputs;
 using Speckle.Sdk.Api.GraphQL.Models;
-using Speckle.Sdk.Common;
 using Speckle.Sdk.Credentials;
 using Speckle.Sdk.Host;
 using Speckle.Sdk.Models;
@@ -22,7 +21,7 @@ namespace Speckle.WebIfc.Importer;
 
 public static class Import
 {
-  public static async Task Ifc(
+  public static async Task<string> Ifc(
     string url,
     string filePath,
     string streamId,
@@ -33,7 +32,16 @@ public static class Import
   )
   {
     var serviceProvider = GetServiceProvider();
-    await Ifc(serviceProvider, url, filePath, streamId, modelId, commitMessage, token, progress);
+    return await Ifc(
+      serviceProvider,
+      url,
+      filePath,
+      streamId,
+      modelId,
+      commitMessage,
+      token,
+      progress
+    );
   }
 
   public static ServiceProvider GetServiceProvider()
@@ -46,7 +54,7 @@ public static class Import
     return serviceCollection.BuildServiceProvider();
   }
 
-  public static async Task Ifc(
+  public static async Task<string> Ifc(
     IServiceProvider serviceProvider,
     string url,
     string filePath,
@@ -98,11 +106,12 @@ public static class Import
 
     // 8 - Create the version (commit)
     using var apiClient = clientFactory.Create(account);
-    _ = await apiClient.Version.Create(
+    var commitId = await apiClient.Version.Create(
       new CreateVersionInput(rootId, modelId, streamId, message: commitMessage)
     );
     ms = ms2;
     ms2 = stopwatch.ElapsedMilliseconds;
     Console.WriteLine($"Committed to Speckle: {ms2 - ms} ms");
+    return commitId;
   }
 }

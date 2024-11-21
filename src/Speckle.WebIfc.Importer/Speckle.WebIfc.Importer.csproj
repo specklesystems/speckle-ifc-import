@@ -7,7 +7,7 @@
  <PropertyGroup Label="Nuget Package Properties">
     <IsPackable>true</IsPackable>
     <IncludeSymbols>true</IncludeSymbols>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
   </PropertyGroup>
   
   <ItemGroup>
