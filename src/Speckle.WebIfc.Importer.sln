@@ -8,9 +8,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{5E9269
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 		global.json = global.json
+		..\.github\workflows\main.yml = ..\.github\workflows\main.yml
+		..\.github\workflows\pr.yml = ..\.github\workflows\pr.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "build", "build\build.csproj", "{8E89E5BD-4EE3-4993-9D42-14F668F2A0D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speckle.Importer.Tester", "Speckle.Importer.Tester\Speckle.Importer.Tester.csproj", "{A0464E50-D451-4D19-B76B-DFDF53161F5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,5 +30,9 @@ Global
 		{8E89E5BD-4EE3-4993-9D42-14F668F2A0D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E89E5BD-4EE3-4993-9D42-14F668F2A0D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E89E5BD-4EE3-4993-9D42-14F668F2A0D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0464E50-D451-4D19-B76B-DFDF53161F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0464E50-D451-4D19-B76B-DFDF53161F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0464E50-D451-4D19-B76B-DFDF53161F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0464E50-D451-4D19-B76B-DFDF53161F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

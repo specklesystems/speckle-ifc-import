@@ -68,7 +68,6 @@ public static class Import
     var ifcFactory = serviceProvider.GetRequiredService<IIfcFactory>();
     var clientFactory = serviceProvider.GetRequiredService<IClientFactory>();
     var baseUri = new Uri(url);
-    Console.WriteLine(ifcFactory.Version);
     var stopwatch = Stopwatch.StartNew();
 
     var model = ifcFactory.Open(filePath);

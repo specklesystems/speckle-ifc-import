@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace Ara3D.StepParser;
 
 public static unsafe class StepFactory
@@ -7,7 +5,7 @@ public static unsafe class StepFactory
   public static StepList GetAttributes(this StepRawInstance inst, byte* lineEnd)
   {
     if (!inst.IsValid())
-      return StepList.Default;
+      return default;
     var ptr = inst.Type.End();
     var token = StepTokenizer.ParseToken(ptr, lineEnd);
     // TODO: there is a potential bug here when the line is split across multiple line
@@ -62,7 +60,9 @@ public static unsafe class StepFactory
   public static StepList CreateAggregate(ref StepToken token, byte* end)
   {
     var values = new List<StepValue>();
-    Debug.Assert(token.Type == StepTokenType.BeginGroup);
+    StepTokenizer.EatWSpace(ref token, end);
+    if (token.Type != StepTokenType.BeginGroup)
+      throw new Exception("Expected '('");
 
     while (StepTokenizer.ParseNextToken(ref token, end))
     {
@@ -71,6 +71,7 @@ public static unsafe class StepFactory
         // Advance past comments, whitespace, and commas
         case StepTokenType.Comment:
         case StepTokenType.Whitespace:
+        case StepTokenType.LineBreak:
         case StepTokenType.Separator:
         case StepTokenType.None:
           continue;
