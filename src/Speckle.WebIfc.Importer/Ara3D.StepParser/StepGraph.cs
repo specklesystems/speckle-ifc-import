@@ -28,10 +28,9 @@ public class StepGraph
 
   public static StepGraph Create(StepDocument doc) => new(doc);
 
-  public string? ToValString(StepNode node, int depth) =>
-    ToValString(node.Entity.Entity, depth - 1);
+  public string ToValString(StepNode node, int depth) => ToValString(node.Entity.Entity, depth - 1);
 
-  public string? ToValString(StepValue? value, int depth)
+  public string ToValString(StepValue value, int depth)
   {
     if (value == null)
       return "";

@@ -7,7 +7,7 @@ public class StepInstance
 
   public List<StepValue> AttributeValues => Entity.Attributes.Values;
 
-  public string EntityType => Entity.EntityType.ToString() ?? "";
+  public string EntityType => Entity?.EntityType.ToString() ?? "";
 
   public StepInstance(uint id, StepEntity entity)
   {
@@ -21,9 +21,5 @@ public class StepInstance
 
   public int Count => AttributeValues.Count;
 
-  public StepValue this[int i]
-#pragma warning disable CA1065
-    =>
-    i < Count ? AttributeValues[i] : throw new IndexOutOfRangeException();
-#pragma warning restore CA1065
+  public StepValue this[int i] => i < Count ? AttributeValues[i] : null;
 }

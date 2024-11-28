@@ -151,7 +151,7 @@ public static class Extensions
 
   public static string AsString(this StepString ss) => ss.Value.AsString();
 
-  public static object? ToJsonObject(this StepValue sv)
+  public static object ToJsonObject(this StepValue sv)
   {
     switch (sv)
     {

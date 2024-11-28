@@ -51,8 +51,8 @@ public class StepString : StepValue
     var span = token.Span;
     Debug.Assert(token.Type == StepTokenType.String);
     Debug.Assert(span.Length >= 2);
-    Debug.Assert(span.First() == '\'');
-    Debug.Assert(span.Last() == '\'');
+    Debug.Assert(span.First() == '\'' || span.First() == '"');
+    Debug.Assert(span.Last() == '\'' || span.Last() == '"');
     return new StepString(span.Trim(1, 1));
   }
 

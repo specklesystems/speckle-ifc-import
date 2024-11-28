@@ -92,6 +92,7 @@ public static class StepTokenizer
         return StepTokenType.LineBreak;
 
       case (byte)'\'':
+      case (byte)'"':
         return StepTokenType.String;
 
       case (byte)'.':
@@ -221,6 +222,21 @@ public static class StepTokenizer
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static unsafe bool EatWSpace(ref StepToken cur, byte* end)
+  {
+    while (
+      cur.Type == StepTokenType.Comment
+      || cur.Type == StepTokenType.Whitespace
+      || cur.Type == StepTokenType.LineBreak
+    )
+    {
+      if (!ParseNextToken(ref cur, end))
+        return false;
+    }
+    return true;
+  }
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static unsafe bool ParseNextToken(ref StepToken prev, byte* end)
   {
     var cur = prev.Span.End();
@@ -243,11 +259,14 @@ public static class StepTokenizer
         break;
 
       case StepTokenType.String:
+        // usually it is as single quote,
+        // but in rare cases it could be a double quote
+        var quoteChar = *(cur - 1);
         while (cur < end)
         {
-          if (*cur++ == '\'')
+          if (*cur++ == quoteChar)
           {
-            if (*cur != '\'')
+            if (*cur != quoteChar)
               break;
             else
               cur++;
