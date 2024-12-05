@@ -38,12 +38,12 @@ public class NodeConverter(IGeometryConverter geometryConverter) : INodeConverte
     {
       var c = geometryConverter.Convert(geo);
       if (c.elements.Count > 0)
-        b["displayValue"] = c.elements;
+        b["@displayValue"] = c.elements;
     }
 
     // Create the children
     var children = node.GetChildren().Select(x => Convert(model, x)).ToList();
-    b["elements"] = children;
+    b["@elements"] = children;
 
     // Add the properties
     foreach (var p in node.GetPropSets())
