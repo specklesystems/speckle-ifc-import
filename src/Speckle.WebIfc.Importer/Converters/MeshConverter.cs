@@ -30,7 +30,7 @@ public class MeshConverter : IMeshConverter
       var a = ip[i];
       var b = ip[i + 1];
       var c = ip[i + 2];
-      faces.Add(0);
+      faces.Add(3);
       faces.Add(a);
       faces.Add(b);
       faces.Add(c);
