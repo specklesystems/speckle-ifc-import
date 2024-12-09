@@ -1,0 +1,65 @@
+using System.Text;
+using Speckle.Sdk.Dependencies.Serialization;
+using Speckle.Sdk.Serialisation.V2;
+using Speckle.Sdk.SQLite;
+using Speckle.Sdk.Transports;
+
+namespace Speckle.Importer.Tester;
+
+public class DummySendCacheManager(Dictionary<string, string> objects) : ISqLiteJsonCacheManager
+{
+  public IEnumerable<string> GetAllObjects() => throw new NotImplementedException();
+
+  public void DeleteObject(string id) => throw new NotImplementedException();
+
+  public string? GetObject(string id) => null;
+
+  public void SaveObject(string id, string json) => throw new NotImplementedException();
+
+  public bool HasObject(string objectId) => false;
+
+  public void SaveObjects(IEnumerable<(string id, string json)> items)
+  {
+    foreach (var (id, json) in items)
+    {
+      objects.Add(id, json);
+    }
+  }
+}
+
+public class DummyServerObjectManager : IServerObjectManager
+{
+  public IAsyncEnumerable<(string, string)> DownloadObjects(
+    IReadOnlyList<string> objectIds,
+    IProgress<ProgressArgs>? progress,
+    CancellationToken cancellationToken
+  ) => throw new NotImplementedException();
+
+  public Task<string?> DownloadSingleObject(
+    string objectId,
+    IProgress<ProgressArgs>? progress,
+    CancellationToken cancellationToken
+  ) => throw new NotImplementedException();
+
+  public Task<Dictionary<string, bool>> HasObjects(
+    IReadOnlyList<string> objectIds,
+    CancellationToken cancellationToken
+  ) => throw new NotImplementedException();
+
+  public Task UploadObjects(
+    IReadOnlyList<BaseItem> objects,
+    bool compressPayloads,
+    IProgress<ProgressArgs>? progress,
+    CancellationToken cancellationToken
+  )
+  {
+    long totalBytes = 0;
+    foreach (var item in objects)
+    {
+      totalBytes += Encoding.Default.GetByteCount(item.Json);
+    }
+
+    progress?.Report(new(ProgressEvent.UploadBytes, totalBytes, totalBytes));
+    return Task.CompletedTask;
+  }
+}
