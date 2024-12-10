@@ -3,8 +3,6 @@ using Ara3D.IfcParser;
 using Ara3D.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Speckle.Importer.Tester;
-using Speckle.Sdk.Api;
-using Speckle.Sdk.Serialisation.V2;
 using Speckle.Sdk.Serialisation.V2.Send;
 using Speckle.WebIfc.Importer;
 using Speckle.WebIfc.Importer.Converters;
@@ -12,10 +10,8 @@ using Speckle.WebIfc.Importer.Ifc;
 
 var serviceProvider = Import.GetServiceProvider();
 
-var filePath = 
-  new FilePath(
-    "C:\\Users\\adam\\Git\\speckle-server\\packages\\fileimport-service\\ifc-dotnet\\ifcs\\20210221PRIMARK.ifc"
-  
+var filePath = new FilePath(
+  "C:\\Users\\adam\\Git\\speckle-server\\packages\\fileimport-service\\ifc-dotnet\\ifcs\\20210221PRIMARK.ifc"
 );
 
 var ifcFactory = serviceProvider.GetRequiredService<IIfcFactory>();
