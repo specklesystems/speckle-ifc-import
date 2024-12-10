@@ -90,7 +90,7 @@ public static class Import
       streamId,
       token,
       progress,
-      new SerializeProcessOptions(true, true, false)
+      new SerializeProcessOptions(true, true, false, true)
     );
     var (rootId, _) = await process
       .Serialize(b, default)

@@ -38,12 +38,12 @@ Console.WriteLine($"Converted to Speckle Bases: {ms2 - ms} ms");
 var objects = new Dictionary<string, string>();
 
 var process2 = new SerializeProcess(
-  null,
+  new Progress(true),
   new DummySendCacheManager(objects),
   new DummyServerObjectManager(),
   new BaseChildFinder(new BasePropertyGatherer()),
   new ObjectSerializerFactory(new BasePropertyGatherer()),
-  new SerializeProcessOptions(false, false, true)
+  new SerializeProcessOptions(true, true, true, true)
 );
 Console.ReadLine();
 var (rootId, _) = await process2.Serialize(b, default).ConfigureAwait(false);
