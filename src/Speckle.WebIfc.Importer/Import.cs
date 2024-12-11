@@ -89,11 +89,10 @@ public static class Import
       baseUri,
       streamId,
       token,
-      progress
+      progress,
+      new SerializeProcessOptions(true, true, false, true)
     );
-    var (rootId, _) = await process
-      .Serialize(b, default, new SerializeProcessOptions(true, true, false))
-      .ConfigureAwait(false);
+    var (rootId, _) = await process.Serialize(b, default).ConfigureAwait(false);
     Account account = new()
     {
       token = token,
